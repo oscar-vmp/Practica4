@@ -1,7 +1,21 @@
+//Promise.all([
+//  d3.csv("csv/PrecioMedio.csv"),
+//  d3.json(
+//    "https://gist.githubusercontent.com/miguepiscy/2d431ec3bc101ef62ff8ddd0e476177f/raw/2482274db871e60195b7196c602700226bdd3a44/practica.json"
+//  )
+//]).then(([csvPrecios, featureCollection]) => {
+//  drawMap(featureCollection);
+//});
+
 d3.json(
   "https://gist.githubusercontent.com/miguepiscy/2d431ec3bc101ef62ff8ddd0e476177f/raw/2482274db871e60195b7196c602700226bdd3a44/practica.json"
 ).then(featureCollection => {
-  drawMap(featureCollection);
+  d3.csv(
+    "https://github.com/oscar-vmp/Practica4/blob/master/csv/PrecioMedio.csv"
+  ).then(csvPrecio => {
+    console.log(csvPrecio);
+    drawMap(featureCollection);
+  });
 });
 
 function drawMap(featureCollection) {
