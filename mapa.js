@@ -33,4 +33,11 @@ function drawMap(featureCollection) {
   subunitsPath.attr("d", d => pathProjection(d));
 
   subunitsPath.append("title").text(d => d.properties.name);
+
+  svg.call(
+    d3.zoom().on("zoom", () => {
+      // console.log("zoom");
+      subunitsPath.attr("transform", d3.event.transform);
+    })
+  );
 }

@@ -7,7 +7,7 @@ body {
 .barrio {
   fill: green;
   stroke: black;
-  stroke-opacity: 0.1;
+  stroke-width: 0.05px;
 }
 
 .barrio:hover {
