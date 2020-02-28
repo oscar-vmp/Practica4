@@ -1,0 +1,15 @@
+body {
+  margin: 0px;
+  overflow: hidden;
+  background-color: darkblue;
+}
+
+.barrio {
+  fill: green;
+  stroke: black;
+  stroke-opacity: 0.1;
+}
+
+.barrio:hover {
+  fill: red;
+}
