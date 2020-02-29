@@ -45,28 +45,32 @@ Promise.all([
   
     const colorScale = d3.scaleThreshold();
   
-    const color = d3.scaleThreshold([0,30,60,90,120,150,180,210,250,280], d3.schemeYlOrBr[9])
+    const color = d3.scaleThreshold([30,60,90,120,150,180,210,250], d3.schemeYlOrBr[9])
     
   
     
     
-    const colorValue = d => +rowByID[d.properties.name];
+   // const colorValue = d => +rowByID[d.properties.name];
   
     
    
     //const colorValue= d
     // console.log(features.map(colorValue).sort());
-    colorScale
-      .domain(features.map(colorValue))
+    //colorScale
+    //  .domain(features.map(colorValue))
      // .domain(features.map(colorValue))
-      .range(d3.schemeBlues[9]);
+    //  .range(d3.schemeBlues[9]);
      // .domain(features.map(colorValue).sort().reverse());
      // .domain(colorScale.domain().sort().reverse())
     //  .range(d3.interpolateBlues);
     //  console.log(  colorScale.domain().sort());
      // 
      // ;
-    
+     const legend = d3.legendColor()
+        .labelFormat(d3.format(".0f"))
+        .labels(d3.legendHelpers.thresholdLabels)
+       // .useClass(true)
+        .scale(color);
     const groupMap = svg.append("g").attr("class", "map");
     const groupMapGrafica = svg.append("g").attr("class", "grafica");
     
@@ -81,7 +85,9 @@ Promise.all([
         .attr('x',300)
         .attr('y',130)
         .attr('rx',15);
-        
+    groupMap.append("g")
+        .attr("transform", "translate(750,140)")
+        .call(legend);   
     const text = groupMap.append("text")
         .attr('x', 350)
         .attr('y', 170)
@@ -145,11 +151,11 @@ Promise.all([
     groupMap
       .attr('transform', `translate(-280, -100)`)
   //
-  //  svg.call(
-  //    d3.zoom().on("zoom", () => {
-        // console.log("zoom");
-  //      subunitsPath.attr("transform", d3.event.transform);
-  //    })
-  //  );
+   //svg.call(
+   //   d3.zoom().on("zoom", () => {
+   //      console.log("zoom");
+   //     subunitsPath.attr("transform", d3.event.transform);
+   //   })
+   // );
   }
   
