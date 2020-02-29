@@ -1,15 +1,29 @@
 body {
   margin: 0px;
   overflow: hidden;
-  background-color: darkblue;
+  background-color: white;
 }
 
 .barrio {
-  fill: green;
   stroke: black;
-  stroke-width: 0.05px;
+  stroke-width: 0.5px;
+  
 }
 
 .barrio:hover {
-  fill: red;
+  fill: green;
+}
+.rectangulo {
+  fill:whitesmoke;
+  stroke: black;
+}
+.textoBarrio {
+  font-size: 20px;
+  fill:black;
+ 
+}
+.textoBarrioGrafica {
+  font-size: 20px;
+  fill:black;
+ 
 }
