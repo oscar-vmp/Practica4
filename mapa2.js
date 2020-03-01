@@ -179,18 +179,27 @@ Promise.all([
     console.log(viviendasBarrio);
     const width = d3.select(".rectanguloGrafica").attr("width");
     const height = d3.select(".rectanguloGrafica").attr("height");
+    const margin = {top: 100, right:20, bottom:80, left: 50};
+    const innerWidth = width - margin.left -margin.right;
+    const innerHeight = height - margin.top -margin.bottom;
+
     //console.log(width);
     //console.log(height);
-    const xScale = d3.scaleLinear()
-    .domain([0,d3.max(viviendasBarrio,d => d.Viviendas)])
-    .range([0,width]);
 
-    const yScale = d3.scaleBand()
-          .domain(viviendasBarrio.map(d => d.Habitaciones))
-          .range([0,height]);
+    const xvalue = d => d.Habitaciones;
+    const yValue= d => d.Viviendas;
+    const yScale = d3.scaleLinear()
+    .domain([0,d3.max(viviendasBarrio,yValue)])
+    .range([0,innerHeight]);
+
+    const xScale = d3.scaleBand()
+          .domain(viviendasBarrio.map(xvalue))
+          .range([0,innerWidth]);
     
    
-    
+   // const gGraf =  groupMapGrafica.append("g");
+                 //   .attr("transform",`translate(${margin.left},${margin.top})`);
+
    const grafica = groupMapGrafica.selectAll(".barraVivienda")
 					.remove()
 					.exit()
@@ -199,10 +208,11 @@ Promise.all([
     grafica.enter()
           .append("rect")
           .attr("class", "barraVivienda")
-          .attr("y",d => yScale(d.Habitaciones))
-          .attr("width",d => xScale(d.Viviendas))
-          .attr("height", yScale.bandwidth());
-          
+          .attr("x",d => xScale(xvalue(d)))
+          .attr("y",d => innerHeight - yScale(yValue(d)))
+          .attr("height",d => yScale(yValue(d)))
+          .attr("width", xScale.bandwidth())
+          .attr("transform",`translate(${margin.left},${margin.top})`);
           
           
           

@@ -17,6 +17,10 @@ body {
   fill:whitesmoke;
   stroke: black;
 }
+.rectanguloGrafica {
+  fill:whitesmoke;
+  stroke: black;
+}
 .textoBarrio {
   font-size: 20px;
   fill:black;
@@ -26,4 +30,7 @@ body {
   font-size: 20px;
   fill:black;
  
+}
+.barraVivienda {
+  fill:black;
 }
