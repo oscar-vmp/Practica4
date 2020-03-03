@@ -56,5 +56,6 @@ div#grafica {
  
 }
 .barraVivienda {
-  fill:black;
+  fill:steelblue;
+  stroke: black;
 }

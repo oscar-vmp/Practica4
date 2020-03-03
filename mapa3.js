@@ -180,7 +180,8 @@ function drawGrafica(viviendasBarrio, groupMapGrafica) {
   const xScale = d3
     .scaleBand()
     .domain(viviendasBarrio.map(xvalue))
-    .range([0, innerWidth]);
+    .range([0, innerWidth])
+    .padding(0.2);
 
   const yScale = d3
     .scaleLinear()
