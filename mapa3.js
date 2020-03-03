@@ -79,6 +79,13 @@ function drawMap(featureCollection, csvPrecios, csvViviendas) {
     .attr("class", "textoBarrio")
     .text("Barrios de Madrid");
 
+    const textPrecio = groupMap
+    .append("text")
+    .attr("x", 20)
+    .attr("y", 50)
+    .attr("class", "textoPrecioBarrio")
+    .text("");
+
   const backgroundRectGrafica = groupMapGrafica
     .selectAll("rect")
     .data([null])
@@ -106,63 +113,14 @@ function drawMap(featureCollection, csvPrecios, csvViviendas) {
     .attr("class", "barrio");
   subunitsPath.attr("d", d => pathProjection(d));
 
-  const NL = d3.formatDefaultLocale({
-    decimal: ".",
-    thousands: ",",
-    grouping: [3],
-    currency: ["", "€"],
-    dateTime: "%a %b %e %X %Y",
-    date: "%m/%d/%Y",
-    time: "%H:%M:%S",
-    periods: ["AM", "PM"],
-    days: [
-      "Sunday",
-      "Monday",
-      "Tuesday",
-      "Wednesday",
-      "Thursday",
-      "Friday",
-      "Saturday"
-    ],
-    shortDays: ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"],
-    months: [
-      "January",
-      "February",
-      "March",
-      "April",
-      "May",
-      "June",
-      "July",
-      "August",
-      "September",
-      "October",
-      "November",
-      "December"
-    ],
-    shortMonths: [
-      "Jan",
-      "Feb",
-      "Mar",
-      "Apr",
-      "May",
-      "Jun",
-      "Jul",
-      "Aug",
-      "Sep",
-      "Oct",
-      "Nov",
-      "Dec"
-    ]
-  });
+  
 
-  const eur = NL.format("$,.0f");
 
-  console.log(eur(3));
   //subunitsPath.append("title").text(d => d.properties.name);
   subunitsPath
     .append("title")
     .text(
-      d => `${d.properties.name} \nPrecio medio: ${rowByID[d.properties.name]} `
+      d => `${d.properties.name} \nPrecio medio: ${rowByID[d.properties.name]} €`
     );
 
   subunitsPath.on("click", function clickSubunit(d) {
@@ -185,6 +143,7 @@ function drawMap(featureCollection, csvPrecios, csvViviendas) {
     // d3.select(this).attr("opacity", d.opacity);
     //   console.log(d.properties.name);
     d3.select(".textoBarrio").text("Barrios de Madrid");
+    d3.select(".textoPrecioBarrio").text("");
   });
 
   subunitsPath.on("mouseover", function clickSubunit(d) {
@@ -192,6 +151,7 @@ function drawMap(featureCollection, csvPrecios, csvViviendas) {
     // d3.select(this).attr("opacity", d.opacity);
     // console.log(d.properties.name);
     d3.select(".textoBarrio").text(`${d.properties.name}`);
+    d3.select(".textoPrecioBarrio").text(`Precio medio: ${rowByID[d.properties.name]} €`);
   });
   groupMapGrafica.attr("transform", `translate(3, 3)`);
   groupMap.attr("transform", `translate(3, 3)`);
