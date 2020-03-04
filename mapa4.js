@@ -232,6 +232,20 @@ function drawGrafica(barrio, viviendasBarrio, groupMapGrafica) {
     .exit()
     .data(viviendasBarrio);
 
+  const textValor = groupMapGrafica
+    .selectAll(".valorDato")
+    // .remove()
+    //.exit()
+    .data(viviendasBarrio)
+    .enter()
+    .append("text")
+    .attr("class", "valorDato");
+
+  textValor
+    .text(d => yValue(d))
+    .attr("x", d => margin.left + margin.right + xScale(xvalue(d)))
+    .attr("y", d => yScale(yValue(d)) + margin.bottom + margin.top / 7);
+
   grafica
     .enter()
     .append("rect")
@@ -250,25 +264,13 @@ function drawGrafica(barrio, viviendasBarrio, groupMapGrafica) {
     .attr("height", d => innerHeight - yScale(yValue(d)))
     .attr("transform", `translate(${margin.left},${margin.top})`);
 
-  const textValor = grafica
-    .selectAll(".valorDato")
-    .data(yValue(d))
-    .enter()
-    .append("text")
-    .attr("class", "valorDato");
-
-  textValor
-    .text("Hola")
-    .attr("x", 100)
-    .attr("y", 100);
-
   /*
-  text
-    .attr("x", function(d, i) {
-      return i * 50;
-      ///return i * (innerWidth / viviendasBarrio.length);
-    })
-    .attr("y", function(d) {
-      return yScale(yValue(d));
-    });*/
+    text
+      .attr("x", function(d, i) {
+        return i * 50;
+        ///return i * (innerWidth / viviendasBarrio.length);
+      })
+      .attr("y", function(d) {
+        return yScale(yValue(d));
+      });*/
 }

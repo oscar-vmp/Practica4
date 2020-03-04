@@ -56,4 +56,9 @@ div#grafica {
 }
 .textoEje {
   font-size: 12px;
+  text-anchor: middle;
+}
+
+.valorDato {
+  font-size: 12px;
 }
