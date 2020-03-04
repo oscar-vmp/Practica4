@@ -208,7 +208,8 @@ function drawGrafica(barrio, viviendasBarrio, groupMapGrafica) {
   groupMapGrafica
     .append("g")
     .attr("class", "axisY")
-    .call(d3.axisLeft(yScale).tickSize(-innerWidth, 0, 0))
+    .call(d3.axisLeft(yScale)
+            .tickSize(-innerWidth, 0, 0))
     .attr("transform", `translate(${margin.left},${margin.top})`);
 
   groupMapGrafica
@@ -226,6 +227,10 @@ function drawGrafica(barrio, viviendasBarrio, groupMapGrafica) {
     .attr("x", innerWidth / 2.3 + margin.left)
     .text("Nº habitaciones");
 
+    groupMapGrafica
+    .selectAll(".valorDato")
+    .remove();
+
   const grafica = groupMapGrafica
     .selectAll(".barraVivienda")
     .remove()
@@ -234,18 +239,13 @@ function drawGrafica(barrio, viviendasBarrio, groupMapGrafica) {
 
   const textValor = groupMapGrafica
     .selectAll(".valorDato")
-    // .remove()
-    //.exit()
+    .remove()
     .data(viviendasBarrio)
     .enter()
     .append("text")
     .attr("class", "valorDato");
 
-  textValor
-    .text(d => yValue(d))
-    .attr("x", d => margin.left + margin.right + xScale(xvalue(d)))
-    .attr("y", d => yScale(yValue(d)) + margin.bottom + margin.top / 7);
-
+  
   grafica
     .enter()
     .append("rect")
@@ -264,13 +264,11 @@ function drawGrafica(barrio, viviendasBarrio, groupMapGrafica) {
     .attr("height", d => innerHeight - yScale(yValue(d)))
     .attr("transform", `translate(${margin.left},${margin.top})`);
 
-  /*
-    text
-      .attr("x", function(d, i) {
-        return i * 50;
-        ///return i * (innerWidth / viviendasBarrio.length);
-      })
-      .attr("y", function(d) {
-        return yScale(yValue(d));
-      });*/
+    textValor
+      .text(d => yValue(d))
+      .attr("x", (d,i) => margin.left+xScale(xvalue(d))+xScale.bandwidth()/2)
+      .attr("y", d => yScale(yValue(d)) + margin.bottom + margin.top / 7)
+      .attr('text-anchor', 'middle');
+
+ 
 }

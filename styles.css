@@ -30,7 +30,8 @@ div#grafica {
 }
 
 .barrio:hover {
-  fill: green;
+  fill: brown;
+  
 }
 .rectangulo {
   fill: whitesmoke;
@@ -44,21 +45,32 @@ div#grafica {
 }
 .textoBarrio {
   font-size: 20px;
-  fill: black;
+  fill: brown;
 }
 .textoBarrioGrafica {
   font-size: 20px;
-  fill: black;
+  text-transform: uppercase;
+  fill: brown;
 }
 .barraVivienda {
-  fill: steelblue;
+  fill: rgb(180, 145, 70);
   stroke: black;
 }
 .textoEje {
-  font-size: 12px;
+  font-size: 14px;
   text-anchor: middle;
 }
 
 .valorDato {
-  font-size: 12px;
+  font-size: 14px;
+  
+}
+.tick line{
+  stroke:lightgrey;
+}
+
+.axisY path{
+  fill: none;
+  stroke: #000;
+  shape-rendering: auto;
 }
