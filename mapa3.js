@@ -79,7 +79,7 @@ function drawMap(featureCollection, csvPrecios, csvViviendas) {
     .attr("class", "textoBarrio")
     .text("Barrios de Madrid");
 
-    const textPrecio = groupMap
+  const textPrecio = groupMap
     .append("text")
     .attr("x", 20)
     .attr("y", 50)
@@ -97,9 +97,10 @@ function drawMap(featureCollection, csvPrecios, csvViviendas) {
     //   .attr('x',200)
     //   .attr('y',130)
     .attr("rx", 15);
+
   const textGrafica = groupMapGrafica
     .append("text")
-    .attr("x", 20)
+    .attr("x", 50)
     .attr("y", 40)
     .attr("class", "textoBarrioGrafica")
     .text("Barrios de Madrid");
@@ -113,21 +114,19 @@ function drawMap(featureCollection, csvPrecios, csvViviendas) {
     .attr("class", "barrio");
   subunitsPath.attr("d", d => pathProjection(d));
 
-  
-
-
   //subunitsPath.append("title").text(d => d.properties.name);
   subunitsPath
     .append("title")
     .text(
-      d => `${d.properties.name} \nPrecio medio: ${rowByID[d.properties.name]} €`
+      d =>
+        `${d.properties.name} \nPrecio medio: ${rowByID[d.properties.name]} €`
     );
 
   subunitsPath.on("click", function clickSubunit(d) {
     // d.opacity = d.opacity ? 0 : 1;
     // d3.select(this).attr("opacity", d.opacity);
     console.log(d.properties.name);
-    d3.select(".textoBarrioGrafica").text(d.properties.name);
+    // d3.select(".textoBarrioGrafica").text(d.properties.name);
     const barrioSeleccionado = d.properties.name;
     // d3.select('.textoBarrio').text (d.properties.name);
 
@@ -135,7 +134,7 @@ function drawMap(featureCollection, csvPrecios, csvViviendas) {
       viviendas => viviendas.Barrio == barrioSeleccionado
     );
 
-    drawGrafica(viviendasBarrio, groupMapGrafica);
+    drawGrafica(barrioSeleccionado, viviendasBarrio, groupMapGrafica);
   });
 
   subunitsPath.on("mouseout", function clickSubunit(d) {
@@ -151,7 +150,9 @@ function drawMap(featureCollection, csvPrecios, csvViviendas) {
     // d3.select(this).attr("opacity", d.opacity);
     // console.log(d.properties.name);
     d3.select(".textoBarrio").text(`${d.properties.name}`);
-    d3.select(".textoPrecioBarrio").text(`Precio medio: ${rowByID[d.properties.name]} €`);
+    d3.select(".textoPrecioBarrio").text(
+      `Precio medio: ${rowByID[d.properties.name]} €`
+    );
   });
   groupMapGrafica.attr("transform", `translate(3, 3)`);
   groupMap.attr("transform", `translate(3, 3)`);
@@ -163,7 +164,8 @@ function drawMap(featureCollection, csvPrecios, csvViviendas) {
     })
   );
 }
-function drawGrafica(viviendasBarrio, groupMapGrafica) {
+function drawGrafica(barrio, viviendasBarrio, groupMapGrafica) {
+  d3.select(".textoBarrioGrafica").text(barrio);
   viviendasBarrio.forEach(d => {
     d.Viviendas = +d.Viviendas;
   });
@@ -188,6 +190,42 @@ function drawGrafica(viviendasBarrio, groupMapGrafica) {
     .domain([0, d3.max(viviendasBarrio, yValue)])
     .range([innerHeight, 0]);
 
+  groupMapGrafica
+    .selectAll(".axisX")
+    .remove()
+    .exit();
+
+  groupMapGrafica
+    .selectAll(".axisY")
+    .remove()
+    .exit();
+
+  groupMapGrafica
+    .append("g")
+    .attr("class", "axisX")
+    .call(d3.axisBottom(xScale))
+    .attr("transform", `translate(${margin.left},${height - margin.bottom})`);
+  groupMapGrafica
+    .append("g")
+    .attr("class", "axisY")
+    .call(d3.axisLeft(yScale).tickSize(-innerWidth, 0, 0))
+    .attr("transform", `translate(${margin.left},${margin.top})`);
+
+  groupMapGrafica
+    .append("text")
+    .attr("class", "textoEje")
+    .attr("x", -(innerHeight / 2) - margin.left)
+    .attr("y", margin.left / 2.4)
+    .attr("transform", "rotate(-90)")
+    .text("Nº de viviendas");
+
+  groupMapGrafica
+    .append("text")
+    .attr("class", "textoEje")
+    .attr("y", height - margin.bottom + 35)
+    .attr("x", innerWidth / 2.3 + margin.left)
+    .text("Nº habitaciones");
+
   const grafica = groupMapGrafica
     .selectAll(".barraVivienda")
     .remove()
@@ -210,26 +248,5 @@ function drawGrafica(viviendasBarrio, groupMapGrafica) {
     .attr("width", xScale.bandwidth())
     .attr("y", d => yScale(yValue(d)))
     .attr("height", d => innerHeight - yScale(yValue(d)))
-    .attr("transform", `translate(${margin.left},${margin.top})`);
-
-  groupMapGrafica
-    .selectAll(".axisX")
-    .remove()
-    .exit();
-
-  groupMapGrafica
-    .selectAll(".axisY")
-    .remove()
-    .exit();
-
-  groupMapGrafica
-    .append("g")
-    .attr("class", "axisX")
-    .call(d3.axisBottom(xScale))
-    .attr("transform", `translate(${margin.left},${height - margin.bottom})`);
-  groupMapGrafica
-    .append("g")
-    .attr("class", "axisY")
-    .call(d3.axisLeft(yScale))
     .attr("transform", `translate(${margin.left},${margin.top})`);
 }

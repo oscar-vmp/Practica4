@@ -8,54 +8,52 @@ body {
 div#body {
   margin: auto;
   margin-top: 30px;
-  width:1000;
-  height:700;
-
+  width: 1000;
+  height: 700;
 }
 div#mapa {
   width: 550px;
   height: 700px;
- 
+
   float: left;
 }
 div#grafica {
   width: 450px;
   height: 700px;
-  
+
   float: left;
 }
-
 
 .barrio {
   stroke: black;
   stroke-width: 0.5px;
-  
 }
 
 .barrio:hover {
   fill: green;
 }
 .rectangulo {
-  fill:whitesmoke;
+  fill: whitesmoke;
   stroke: black;
   stroke-width: 1px;
 }
 .rectanguloGrafica {
-  fill:whitesmoke;
+  fill: whitesmoke;
   stroke: black;
   stroke-width: 1px;
 }
 .textoBarrio {
   font-size: 20px;
-  fill:black;
- 
+  fill: black;
 }
 .textoBarrioGrafica {
   font-size: 20px;
-  fill:black;
- 
+  fill: black;
 }
 .barraVivienda {
-  fill:steelblue;
+  fill: steelblue;
   stroke: black;
+}
+.textoEje {
+  font-size: 12px;
 }
