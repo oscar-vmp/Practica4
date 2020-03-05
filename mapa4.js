@@ -114,21 +114,18 @@ function drawMap(featureCollection, csvPrecios, csvViviendas) {
     .attr("class", "barrio");
   subunitsPath.attr("d", d => pathProjection(d));
 
-  //subunitsPath.append("title").text(d => d.properties.name);
   subunitsPath
     .append("title")
-    .text(
-      d =>
-        `${d.properties.name} \nPrecio medio: ${rowByID[d.properties.name]} €`
+    .text(d =>
+      typeof rowByID[d.properties.name] === "undefined"
+        ? `${d.properties.name}`
+        : `${d.properties.name} \nPrecio medio: ${rowByID[d.properties.name]} €`
     );
 
   subunitsPath.on("click", function clickSubunit(d) {
-    // d.opacity = d.opacity ? 0 : 1;
-    // d3.select(this).attr("opacity", d.opacity);
     console.log(d.properties.name);
-    // d3.select(".textoBarrioGrafica").text(d.properties.name);
+
     const barrioSeleccionado = d.properties.name;
-    // d3.select('.textoBarrio').text (d.properties.name);
 
     const viviendasBarrio = csvViviendas.filter(
       viviendas => viviendas.Barrio == barrioSeleccionado
@@ -138,31 +135,27 @@ function drawMap(featureCollection, csvPrecios, csvViviendas) {
   });
 
   subunitsPath.on("mouseout", function clickSubunit(d) {
-    // d.opacity = d.opacity ? 0 : 1;
-    // d3.select(this).attr("opacity", d.opacity);
-    //   console.log(d.properties.name);
     d3.select(".textoBarrio").text("Barrios de Madrid");
     d3.select(".textoPrecioBarrio").text("");
   });
 
   subunitsPath.on("mouseover", function clickSubunit(d) {
-    // d.opacity = d.opacity ? 0 : 1;
-    // d3.select(this).attr("opacity", d.opacity);
-    // console.log(d.properties.name);
     d3.select(".textoBarrio").text(`${d.properties.name}`);
     d3.select(".textoPrecioBarrio").text(
-      `Precio medio: ${rowByID[d.properties.name]} €`
+      typeof rowByID[d.properties.name] === "undefined"
+        ? ``
+        : `Precio medio: ${rowByID[d.properties.name]} €`
     );
   });
   groupMapGrafica.attr("transform", `translate(3, 3)`);
   groupMap.attr("transform", `translate(3, 3)`);
-  //
+  /*
   groupMap.call(
     d3.zoom().on("zoom", () => {
       console.log("zoom");
       subunitsPath.attr("transform", d3.event.transform);
     })
-  );
+  );*/
 }
 function drawGrafica(barrio, viviendasBarrio, groupMapGrafica) {
   d3.select(".textoBarrioGrafica").text(barrio);
