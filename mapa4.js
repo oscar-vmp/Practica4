@@ -202,15 +202,20 @@ function drawGrafica(barrio, viviendasBarrio, groupMapGrafica) {
 
   groupMapGrafica
     .append("g")
+    .attr("class", "axisY")
+    .call(
+      d3
+        .axisLeft(yScale)
+        .tickSize(-innerWidth, 0, 0)
+        .tickSizeOuter(0)
+    )
+    .attr("transform", `translate(${margin.left},${margin.top})`);
+
+  groupMapGrafica
+    .append("g")
     .attr("class", "axisX")
     .call(d3.axisBottom(xScale))
     .attr("transform", `translate(${margin.left},${height - margin.bottom})`);
-  groupMapGrafica
-    .append("g")
-    .attr("class", "axisY")
-    .call(d3.axisLeft(yScale)
-            .tickSize(-innerWidth, 0, 0))
-    .attr("transform", `translate(${margin.left},${margin.top})`);
 
   groupMapGrafica
     .append("text")
@@ -227,9 +232,7 @@ function drawGrafica(barrio, viviendasBarrio, groupMapGrafica) {
     .attr("x", innerWidth / 2.3 + margin.left)
     .text("Nº habitaciones");
 
-    groupMapGrafica
-    .selectAll(".valorDato")
-    .remove();
+  groupMapGrafica.selectAll(".valorDato").remove();
 
   const grafica = groupMapGrafica
     .selectAll(".barraVivienda")
@@ -245,7 +248,6 @@ function drawGrafica(barrio, viviendasBarrio, groupMapGrafica) {
     .append("text")
     .attr("class", "valorDato");
 
-  
   grafica
     .enter()
     .append("rect")
@@ -264,11 +266,12 @@ function drawGrafica(barrio, viviendasBarrio, groupMapGrafica) {
     .attr("height", d => innerHeight - yScale(yValue(d)))
     .attr("transform", `translate(${margin.left},${margin.top})`);
 
-    textValor
-      .text(d => yValue(d))
-      .attr("x", (d,i) => margin.left+xScale(xvalue(d))+xScale.bandwidth()/2)
-      .attr("y", d => yScale(yValue(d)) + margin.bottom + margin.top / 7)
-      .attr('text-anchor', 'middle');
-
- 
+  textValor
+    .text(d => yValue(d))
+    .attr(
+      "x",
+      (d, i) => margin.left + xScale(xvalue(d)) + xScale.bandwidth() / 2
+    )
+    .attr("y", d => yScale(yValue(d)) + margin.bottom + margin.top / 7)
+    .attr("text-anchor", "middle");
 }

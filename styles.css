@@ -31,7 +31,6 @@ div#grafica {
 
 .barrio:hover {
   fill: brown;
-  
 }
 .rectangulo {
   fill: whitesmoke;
@@ -63,14 +62,14 @@ div#grafica {
 
 .valorDato {
   font-size: 14px;
-  
-}
-.tick line{
-  stroke:lightgrey;
 }
 
-.axisY path{
-  fill: none;
-  stroke: #000;
-  shape-rendering: auto;
+.axisY .tick line {
+  stroke: lightgrey;
+}
+.axisY path {
+  stroke-width: 1;
+}
+.axisX path {
+  stroke-width: 1;
 }
